@@ -5,7 +5,7 @@ import com.github.iluwa.transportscheduleaggregator.db.model.dictionaries.Countr
 import com.github.iluwa.transportscheduleaggregator.db.model.dictionaries.Region;
 import com.github.iluwa.transportscheduleaggregator.db.model.dictionaries.Settlement;
 import com.github.iluwa.transportscheduleaggregator.db.model.dictionaries.Station;
-import com.github.iluwa.transportscheduleaggregator.yandex.response.stationsliststructure.*;
+import com.github.iluwa.transportscheduleaggregator.yandex.stationslist.responsestructure.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class DictionariesService {
      * Method maps json object response (stations_list) to entities
      * @param countriesContainer head of json response object
      */
-    public void countriesToEntity(CountriesContainer countriesContainer) {
+    public void countriesToEntity(StationsListResponse countriesContainer) {
         int count = 0;
         for (JsonCountry jsonCountry : countriesContainer.getCountries()) {
             Country country = new Country(jsonCountry.getCode().getCode(), jsonCountry.getTitle());
