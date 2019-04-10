@@ -1,7 +1,8 @@
 # transport-schedule-aggregator
 ### Idea:
-save data response from yandex-rasp API to use it in various aggregations (cheapest tickect in date interval from place1 to place2)
-To minimize api invokations, data from response will store in database and have expiration period (some hours).
+save data response from yandex-rasp API to use it in various aggregations (cheapest tickect in date interval from place1 to place2).
+
+To minimize api invokations, data from response will be stored in database and have expiration period (some hours).
 
 ### Mainly used technologies:
 h2 embedded database, spring boot and hinernate.
