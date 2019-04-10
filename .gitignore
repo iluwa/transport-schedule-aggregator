@@ -30,3 +30,6 @@ HELP.md
 
 ### ApiKey ###
 **/yandex/ApiKeyStorage.java
+
+### db ###
+*.mv.db
