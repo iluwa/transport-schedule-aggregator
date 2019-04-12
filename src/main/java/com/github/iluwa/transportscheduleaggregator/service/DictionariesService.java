@@ -21,11 +21,11 @@ public class DictionariesService {
 
     /**
      * Method maps json object response (stations_list) to entities
-     * @param countriesContainer head of json response object
+     * @param stationsListResponse head of json response object
      */
-    public void countriesToEntity(StationsListResponse countriesContainer) {
+    public void countriesToEntity(StationsListResponse stationsListResponse) {
         int count = 0;
-        for (JsonCountry jsonCountry : countriesContainer.getCountries()) {
+        for (JsonCountry jsonCountry : stationsListResponse.getCountries()) {
             Country country = new Country(jsonCountry.getCode().getCode(), jsonCountry.getTitle());
             baseDao.save(country);
             for (JsonRegion jsonRegion : jsonCountry.getRegions()) {

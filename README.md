@@ -2,7 +2,7 @@
 ### Idea:
 save data response from yandex-rasp API to use it in various aggregations (cheapest tickect in date interval from place1 to place2).
 
-To minimize api invokations, data from response will be stored in database and have expiration period (some hours).
+To minimize api invocations, data from response will be stored in database and have expiration period (some hours).
 
 ### Mainly used technologies:
 h2 embedded database, spring boot and hinernate.
@@ -15,8 +15,6 @@ h2 embedded database, spring boot and hinernate.
   - saving json response to dictionary entities.
 
 ### What's planning:
-  - refactor structure of implementation api;
-
   - request "search" (other related things like entities, mapping from json to entities);
 
   - some aggregation commands;
@@ -25,4 +23,6 @@ h2 embedded database, spring boot and hinernate.
 
   - set up logger;
 
-  - set up docker to figure out its principles.
+  - set up docker to figure out its principles;
+
+  - write unit tests.
