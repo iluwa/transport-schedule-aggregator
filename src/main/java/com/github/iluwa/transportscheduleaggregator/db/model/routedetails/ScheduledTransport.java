@@ -1,9 +1,10 @@
-package com.github.iluwa.transportscheduleaggregator.db.model.RouteDetails;
+package com.github.iluwa.transportscheduleaggregator.db.model.routedetails;
 
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "SCHEDULED_TRANSPORT")
@@ -17,7 +18,7 @@ public class ScheduledTransport {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "UID")
+    @Column(name = "UID", length = 100)
     private String uid;
 
     @Column(name = "ARRIVAL_DT")
@@ -28,8 +29,16 @@ public class ScheduledTransport {
 
     @ManyToOne
     @JoinColumn(name = "ROUTE_ID")
-    private Route rooute;
+    private Route route;
 
     @OneToMany(mappedBy = "scheduledTransport")
-    private Thicket thicket;
+    private List<Thicket> thicket;
+
+    public ScheduledTransport(String title, String uid, LocalDateTime arrivalDate, LocalDateTime departureDate, Route route) {
+        this.title = title;
+        this.uid = uid;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
+        this.route = route;
+    }
 }

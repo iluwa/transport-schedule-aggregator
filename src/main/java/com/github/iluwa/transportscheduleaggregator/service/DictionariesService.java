@@ -10,8 +10,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
- * Class manage dictionary entities
+ * Class manages dictionary entities
  */
 @Service
 @AllArgsConstructor
@@ -22,8 +24,10 @@ public class DictionariesService {
     /**
      * Method maps json object response (stations_list) to entities
      * @param stationsListResponse head of json response object
+     *
+     * TODO: See if i can split mapping logic and write to db logic
      */
-    public void countriesToEntity(StationsListResponse stationsListResponse) {
+    public void stationsListResponseToEntity(StationsListResponse stationsListResponse) {
         int count = 0;
         for (JsonCountry jsonCountry : stationsListResponse.getCountries()) {
             Country country = new Country(jsonCountry.getCode().getCode(), jsonCountry.getTitle());

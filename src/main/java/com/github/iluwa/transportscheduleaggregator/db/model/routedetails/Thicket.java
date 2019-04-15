@@ -1,4 +1,4 @@
-package com.github.iluwa.transportscheduleaggregator.db.model.RouteDetails;
+package com.github.iluwa.transportscheduleaggregator.db.model.routedetails;
 
 import lombok.NoArgsConstructor;
 
@@ -22,4 +22,10 @@ public class Thicket {
     @ManyToOne
     @JoinColumn(name = "SCHEDULED_TRANSPORT_ID")
     private ScheduledTransport scheduledTransport;
+
+    public Thicket(double price, String name, ScheduledTransport scheduledTransport) {
+        this.price = price;
+        this.name = name;
+        this.scheduledTransport = scheduledTransport;
+    }
 }

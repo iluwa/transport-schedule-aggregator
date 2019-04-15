@@ -18,7 +18,7 @@ public class Settlement {
     @Column(name = "ID")
     private long id;
 
-    @Column(name = "CODE")
+    @Column(name = "CODE", length = 50)
     private String code;
 
     @Column(name = "TITLE")
