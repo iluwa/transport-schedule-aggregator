@@ -31,8 +31,8 @@ public class ScheduledTransport {
     @JoinColumn(name = "ROUTE_ID")
     private Route route;
 
-    @OneToMany(mappedBy = "scheduledTransport")
-    private List<Thicket> thicket;
+    @OneToMany(mappedBy = "scheduledTransport", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<Thicket> thickets;
 
     public ScheduledTransport(String title, String uid, LocalDateTime arrivalDate, LocalDateTime departureDate, Route route) {
         this.title = title;
@@ -40,5 +40,22 @@ public class ScheduledTransport {
         this.arrivalDate = arrivalDate;
         this.departureDate = departureDate;
         this.route = route;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Route{")
+                .append("id=").append(id).append(", ")
+                .append("title='").append(title).append("', ")
+                .append("uid='").append(uid).append("', ")
+                .append("arrivalDate=").append(arrivalDate).append(", ")
+                .append("departureDate=").append(departureDate).append(", ")
+                .append("thickets = [");
+        for (Thicket thicket : thickets) {
+            sb.append("\n\t\t\t").append(thicket);
+        }
+        sb.append("\n\t\t]}");
+        return sb.toString();
     }
 }

@@ -1,13 +1,15 @@
 package com.github.iluwa.transportscheduleaggregator.service;
 
-import com.github.iluwa.transportscheduleaggregator.db.BaseDao;
+import com.github.iluwa.transportscheduleaggregator.db.dao.BaseDao;
+import com.github.iluwa.transportscheduleaggregator.db.dao.RouteDao;
 import com.github.iluwa.transportscheduleaggregator.db.model.routedetails.Route;
 import com.github.iluwa.transportscheduleaggregator.db.model.routedetails.ScheduledTransport;
 import com.github.iluwa.transportscheduleaggregator.db.model.routedetails.Thicket;
 import com.github.iluwa.transportscheduleaggregator.yandex.search.responsestructure.JsonSegment;
 import com.github.iluwa.transportscheduleaggregator.yandex.search.responsestructure.JsonThicket;
 import com.github.iluwa.transportscheduleaggregator.yandex.search.responsestructure.SearchResponse;
-import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +22,17 @@ import java.util.Optional;
  * Class manages route entities
  */
 @Service
-@AllArgsConstructor
 public class RouteService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(RouteService.class);
     private final static DateTimeFormatter DATE_WITHOUT_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final static DateTimeFormatter FULL_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssxxx");
+    private final static int ROUTE_RESPONSE_ACTUALITY_HOURS = 24;
 
     @Autowired
-    BaseDao baseDao;
+    private BaseDao baseDao;
+
+    @Autowired
+    private RouteDao routeDao;
 
     /**
      * Method maps json object response (search) to entities
@@ -35,6 +41,8 @@ public class RouteService {
      * TODO: See if i can split mapping logic and write to db logic
      */
     public void searchResponseToEntity(SearchResponse searchResponse) {
+        LOGGER.info("Saving search reponse to database");
+
         String date = Optional.ofNullable(searchResponse.getSearchParams().getDate()).orElse("");
         LocalDate requestedDate = !date.isEmpty() ? LocalDate.parse(date, DATE_WITHOUT_TIME) : null;
 
@@ -70,5 +78,18 @@ public class RouteService {
         }
         baseDao.flush();
         baseDao.clear();
+    }
+
+    /**
+     * Method deletes all outdated routes
+     */
+    public void deleteOutdatedRoutes() {
+        LOGGER.info("Clearing outdated routes");
+        routeDao.deleteOutdatedRoutes(LocalDateTime.now().minusHours(ROUTE_RESPONSE_ACTUALITY_HOURS));
+    }
+
+    public Route findActualRouteByParams(String codeFrom, String codeTo, LocalDate date) {
+        return routeDao.findActualRouteByParams(codeFrom, codeTo, date,
+                LocalDateTime.now().minusHours(ROUTE_RESPONSE_ACTUALITY_HOURS));
     }
 }

@@ -1,5 +1,6 @@
 package com.github.iluwa.transportscheduleaggregator.db.model.routedetails;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "ROUTE")
 @NoArgsConstructor
+@Getter
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -33,12 +35,30 @@ public class Route {
     @CreationTimestamp
     private LocalDateTime createdDate;
 
-    @OneToMany(mappedBy = "route")
-    private List<ScheduledTransport> scheduledTransport;
+    @OneToMany(mappedBy = "route", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<ScheduledTransport> scheduledTransports;
 
     public Route(String codeFrom, String codeTo, LocalDate routeDate) {
         this.codeFrom = codeFrom;
         this.codeTo = codeTo;
         this.routeDate = routeDate;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Route{")
+                .append("id=").append(id).append(", ")
+                .append("codeFrom='").append(codeFrom).append("', ")
+                .append("codeTo='").append(codeTo).append("', ")
+                .append("routeDate=").append(routeDate).append(", ")
+                .append("createdDate=").append(createdDate).append(", ")
+                .append("scheduledTransports = [");
+        for (ScheduledTransport transport : scheduledTransports) {
+            sb.append("\n\t\t").append(transport);
+        }
+        sb.append("\n\t]}");
+
+        return sb.toString();
     }
 }

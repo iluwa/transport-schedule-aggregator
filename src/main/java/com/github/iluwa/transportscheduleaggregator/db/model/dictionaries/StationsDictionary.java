@@ -5,16 +5,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "COUNTRY")
+@Table(name = "STATIONS")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Country {
+public class StationsDictionary {
     @Id
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "ID")
     private long id;
 
@@ -24,10 +23,7 @@ public class Country {
     @Column(name = "TITLE")
     private String title;
 
-    @OneToMany(mappedBy = "country")
-    private List<Region> regions;
-
-    public Country(String code, String title) {
+    public StationsDictionary(String code, String title) {
         this.code = code;
         this.title = title;
     }

@@ -1,4 +1,4 @@
-package com.github.iluwa.transportscheduleaggregator.db;
+package com.github.iluwa.transportscheduleaggregator.db.dao;
 
 import java.util.List;
 

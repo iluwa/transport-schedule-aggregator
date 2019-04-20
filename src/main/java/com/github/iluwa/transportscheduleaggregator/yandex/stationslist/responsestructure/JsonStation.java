@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * This class is part Stations of response
+ * This class is part StationsDictionary of response
  * Used to deserialize String response to pojo objects
  */
 @NoArgsConstructor
 @Getter
-public class JsonStation {
+public class JsonStation implements StationObject {
     @SerializedName("title")
     private String title;
 

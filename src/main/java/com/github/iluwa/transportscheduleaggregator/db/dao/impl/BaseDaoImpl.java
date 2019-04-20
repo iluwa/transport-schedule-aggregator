@@ -1,5 +1,6 @@
-package com.github.iluwa.transportscheduleaggregator.db;
+package com.github.iluwa.transportscheduleaggregator.db.dao.impl;
 
+import com.github.iluwa.transportscheduleaggregator.db.dao.BaseDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -50,8 +51,8 @@ public class BaseDaoImpl implements BaseDao {
 
     @Override
     public <T> int deleteAllEntities(Class<T> clazz) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaDelete<T> query = builder.createCriteriaDelete(clazz);
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<T> query = cb.createCriteriaDelete(clazz);
         query.from(clazz);
         return entityManager.createQuery(query).executeUpdate();
     }

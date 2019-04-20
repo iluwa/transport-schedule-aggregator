@@ -12,7 +12,7 @@ import java.util.List;
  */
 @NoArgsConstructor
 @Getter
-public class JsonRegion {
+public class JsonRegion implements StationObject{
     @SerializedName("title")
     private String title;
 

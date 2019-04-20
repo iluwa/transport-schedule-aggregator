@@ -28,4 +28,13 @@ public class Thicket {
         this.name = name;
         this.scheduledTransport = scheduledTransport;
     }
+
+    @Override
+    public String toString() {
+        return "Thicket{" +
+                "id=" + id +
+                ", price=" + price +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

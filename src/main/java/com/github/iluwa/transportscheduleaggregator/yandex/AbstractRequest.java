@@ -1,6 +1,8 @@
 package com.github.iluwa.transportscheduleaggregator.yandex;
 
 import com.github.kevinsawicki.http.HttpRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -9,7 +11,8 @@ import java.util.Map;
  *
  */
 public abstract class AbstractRequest implements ApiRequest {
-    public final static String API_URL = "https://api.rasp.yandex.net/v3.0/";
+    private final static String API_URL = "https://api.rasp.yandex.net/v3.0/";
+    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractRequest.class);
 
     /**
      * @return name of current request
@@ -19,6 +22,7 @@ public abstract class AbstractRequest implements ApiRequest {
     @Override
     public HttpRequest sendGetRequest() {
         Map<String, String> requestParams = toMap();
+        LOGGER.debug("Api request params: " + requestParams.toString());
         return HttpRequest.get(API_URL + getRequestName(), requestParams, true);
     }
 
