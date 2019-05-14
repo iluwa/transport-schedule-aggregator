@@ -2,6 +2,7 @@ package com.github.iluwa.transportscheduleaggregator;
 
 import com.github.iluwa.transportscheduleaggregator.service.DictionariesService;
 import com.github.iluwa.transportscheduleaggregator.service.RouteService;
+import com.github.iluwa.transportscheduleaggregator.userinteractionhelper.InputStringParser;
 import com.github.iluwa.transportscheduleaggregator.userinteractionhelper.commandhandlers.FindStationCodeHandler;
 import com.github.iluwa.transportscheduleaggregator.userinteractionhelper.exceptions.CodeNotFoundException;
 import com.github.iluwa.transportscheduleaggregator.userinteractionhelper.Commands;
@@ -30,6 +31,9 @@ public class TransportScheduleAggregatorApplication implements CommandLineRunner
 
 	@Autowired
 	private RouteService routeService;
+
+	@Autowired
+	private InputStringParser inputParser;
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TransportScheduleAggregatorApplication.class);
 
@@ -76,10 +80,10 @@ public class TransportScheduleAggregatorApplication implements CommandLineRunner
 
 		boolean isInterrupted = false;
 		while (!isInterrupted) {
-			String inputString = sc.nextLine();
-			LOGGER.info("User's input: " + inputString);
-			StringTokenizer st = new StringTokenizer(inputString, " ");
-			String command = st.hasMoreTokens() ? st.nextToken() : "";
+			String inputLine = sc.nextLine();
+			LOGGER.info("User's input: " + inputLine);
+			inputParser.match(inputLine);
+			String command = inputParser.nextMatch();
 
 			try {
 				switch (COMMANDS_MAP.getOrDefault(command, Commands.EMPTY)) {
@@ -89,16 +93,17 @@ public class TransportScheduleAggregatorApplication implements CommandLineRunner
 						break;
 					case ROUTES_BY_DATE:
 						LOGGER.trace("Handle routes by date command");
-						if (st.countTokens() != 3) {
+						if (inputParser.matchesCount() != 4) {
 							System.out.println(FORMAT_ERROR);
 							System.out.println(Commands.ROUTES_BY_DATE.getExample());
+							break;
 						}
-						new RoutesByDateHandler(st.nextToken(), st.nextToken(), st.nextToken(),
-								dictionariesService, routeService).handle();
+						new RoutesByDateHandler(inputParser.nextMatch(), inputParser.nextMatch(),
+								inputParser.nextMatch(), dictionariesService, routeService).handle();
 						break;
 					case INTREVAL_PRICE_BY_UID:
 						LOGGER.trace("Handle interval price by uid command");
-						if (st.countTokens() != 4) {
+						if (inputParser.matchesCount() != 5) {
 							System.out.println(FORMAT_ERROR);
 							System.out.println(Commands.INTREVAL_PRICE_BY_UID.getExample());
 							break;
@@ -106,11 +111,12 @@ public class TransportScheduleAggregatorApplication implements CommandLineRunner
 						break;
 					case FIND_STATION_CODE:
 						LOGGER.trace("Handle find station code command");
-						if (st.countTokens() != 1) {
+						if (inputParser.matchesCount() != 2) {
 							System.out.println(FORMAT_ERROR);
 							System.out.println(Commands.FIND_STATION_CODE.getExample());
+							break;
 						}
-						new FindStationCodeHandler(st.nextToken(), dictionariesService).handle();
+						new FindStationCodeHandler(inputParser.nextMatch(), dictionariesService).handle();
 						break;
 					default:
 						System.out.println("Unknown command");
