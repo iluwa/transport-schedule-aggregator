@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 public class DictionariesService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(DictionariesService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DictionariesService.class);
 
     @Autowired
     private BaseDao baseDao;

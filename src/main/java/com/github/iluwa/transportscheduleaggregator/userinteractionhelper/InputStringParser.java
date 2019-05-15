@@ -10,10 +10,10 @@ import java.util.regex.Pattern;
  */
 @Component
 public class InputStringParser {
-    private final static Pattern USER_INPUT_PATTERN = Pattern.compile("\"([^\"]*)\"|(\\S+)");
+    private static final Pattern USER_INPUT_PATTERN = Pattern.compile("\"([^\"]*)\"|(\\S+)");
 
     // Default matcher with empty String
-    final private Matcher matcher = USER_INPUT_PATTERN.matcher("");
+    private final Matcher matcher = USER_INPUT_PATTERN.matcher("");
 
     /**
      * @return next match of constatn pattern

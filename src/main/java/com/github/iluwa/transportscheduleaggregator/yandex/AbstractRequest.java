@@ -11,8 +11,8 @@ import java.util.Map;
  *
  */
 public abstract class AbstractRequest implements ApiRequest {
-    private final static String API_URL = "https://api.rasp.yandex.net/v3.0/";
-    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractRequest.class);
+    private static final String API_URL = "https://api.rasp.yandex.net/v3.0/";
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRequest.class);
 
     /**
      * @return name of current request

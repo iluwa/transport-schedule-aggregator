@@ -23,10 +23,10 @@ import java.util.Optional;
  */
 @Service
 public class RouteService {
-    private final static Logger LOGGER = LoggerFactory.getLogger(RouteService.class);
-    private final static DateTimeFormatter DATE_WITHOUT_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private final static DateTimeFormatter FULL_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssxxx");
-    private final static int ROUTE_RESPONSE_ACTUALITY_HOURS = 24;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteService.class);
+    private static final DateTimeFormatter DATE_WITHOUT_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter FULL_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssxxx");
+    private static final int ROUTE_RESPONSE_ACTUALITY_HOURS = 24;
 
     @Autowired
     private BaseDao baseDao;

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StationsListRequest extends AbstractRequest {
-    private final String REQUEST_NAME = "stations_list";
+    private static final String REQUEST_NAME = "stations_list";
 
     private final String apiKey;
     private final String lang;

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SearchRequest extends AbstractRequest {
-    private final String REQUEST_NAME = "search";
+    private static final String REQUEST_NAME = "search";
 
     private final String apiKey;
     private final String from;

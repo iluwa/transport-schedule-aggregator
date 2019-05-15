@@ -26,18 +26,9 @@ import java.util.*;
 
 @SpringBootApplication
 public class TransportScheduleAggregatorApplication implements CommandLineRunner {
-	@Autowired
-	private DictionariesService dictionariesService;
+	private static final Logger LOGGER = LoggerFactory.getLogger(TransportScheduleAggregatorApplication.class);
 
-	@Autowired
-	private RouteService routeService;
-
-	@Autowired
-	private InputStringParser inputParser;
-
-	private final static Logger LOGGER = LoggerFactory.getLogger(TransportScheduleAggregatorApplication.class);
-
-	private final static String FORMAT_ERROR = "Not valid command format";
+	private static final String FORMAT_ERROR = "Not valid command format";
 	private static final Map<String, Commands> COMMANDS_MAP;
 	static {
 		Map<String, Commands> m = new HashMap<>();
@@ -49,13 +40,21 @@ public class TransportScheduleAggregatorApplication implements CommandLineRunner
 		COMMANDS_MAP = Collections.unmodifiableMap(m);
 	}
 
+	@Autowired
+	private DictionariesService dictionariesService;
+
+	@Autowired
+	private RouteService routeService;
+
+	@Autowired
+	private InputStringParser inputParser;
+
 	public static void main(String[] args) {
 		SpringApplication.run(TransportScheduleAggregatorApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-
 		System.out.println("Preparation... Please, wait a bit...");
 		if (!dictionariesService.isDictionaryLoaded()) {
 			LOGGER.info("Loading dictionary, get request StationsList");
